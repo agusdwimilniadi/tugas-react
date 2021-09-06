@@ -6,7 +6,7 @@ export default function ProfilePage({users}) {
     return (
         <div>
             <Header text="Profile Page"/>
-            {users.map((user)=> <ProfileCard user={user}/>) }
+            {users.map((x)=> <ProfileCard user={x}/>) }
         </div>
         
     )
