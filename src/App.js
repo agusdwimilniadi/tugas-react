@@ -1,10 +1,11 @@
 import Main from "./pages/main/Main";
+import { dataList } from "./pages/main/data";
 
 function App() {
   return (
-    <div>
-      <Main/>
-    </div>
+    <>
+      <Main varDataList = {dataList} />
+    </>
   );
 }
 

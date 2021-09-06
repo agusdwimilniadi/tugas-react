@@ -1,11 +1,11 @@
 import Header from "./components/Header"
 import Button from "./components/Button"
 
-export default function Main() {
+export default function Main(varDataList) {
     return (
         <>
             <Header/>
-            <Button/>
+            {varDataList.map((id)=> <Button data={id}/>) }
         </>
 
     )
