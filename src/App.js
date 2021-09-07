@@ -1,10 +1,10 @@
-import Main from "./pages/main/Main";
-import { dataList } from "./pages/main/data";
+import Home from "./components/Home";
+
 
 function App() {
   return (
     <>
-      <Main varDataList = {dataList} />
+      <Home/>
     </>
   );
 }
