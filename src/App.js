@@ -4,7 +4,7 @@ import { dataList } from "./pages/main/data";
 function App() {
   return (
     <>
-      <Main varDataList = {dataList} />
+      <Main varDataList = {dataList} key={dataList.id} />
     </>
   );
 }

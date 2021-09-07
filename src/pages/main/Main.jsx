@@ -5,7 +5,7 @@ export default function Main({varDataList}) {
     return (
         <div>
             <Header/>
-            {varDataList.map((x)=> <Button data={x}/>) }
+            {varDataList.map((x)=> <Button data={x} />) }
         </div>
 
     )
