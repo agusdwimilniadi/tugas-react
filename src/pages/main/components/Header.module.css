@@ -1,4 +1,26 @@
 .container {
     color: blue;
     text-align: center;
+    min-height: 60px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.textHeader {
+    margin: auto;
+    text-align: center;
+    font-size: 72px;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,108,1) 0%, rgba(56,5,81,1) 100%, rgba(0,212,255,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.inputForm {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    box-sizing: border-box;
 }

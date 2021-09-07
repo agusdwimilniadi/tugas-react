@@ -9,6 +9,7 @@ export default function Button ({data}) {
                         {data.title}
                     </p>
                 </button>
+                <button style={{display:"inline-block"}}>Delet</button>
             </div>
         </>
     )
