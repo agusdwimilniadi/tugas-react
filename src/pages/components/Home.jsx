@@ -52,8 +52,8 @@ class Home extends Component {
         }
     }
     hapusList = (id) => {
-      const newListTugas = this.state.data.filter((item)=>item.id !== id)
-      this.setState({data: newListTugas})
+      const newListTugas = this.state.data.filter((item)=> item.id !== id) //id nya bukan itu
+      this.setState({data: newListTugas}) //RETURN
     }
     render() {
         return (

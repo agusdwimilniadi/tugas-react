@@ -5,7 +5,7 @@ import style from "../components/style.module.css"
 
 
 const ListTugas = (props) => {
-    const{data, hapusList} = props
+    const{data, hapusList} = props //ambil variabel data dan hapus list dari props
 
     return (
         <div className={style.container}>
