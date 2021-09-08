@@ -2,7 +2,7 @@ import style from "../components/style.module.css"
 const ListItem = ({item, hapusList}) => {
     return (
         <tr className={style.boxCenter}>
-            <td>{item.title}</td>
+            <td style={item.completed ? {textDecoration:"line-through"} : {}}>{item.title}</td>
             <td>
                 <input type="checkbox"  checked={item.completed? (true) : (false)}/>
             </td>
