@@ -57,16 +57,20 @@ class Home extends Component {
     }
 
     tambahList = (newList) => {
-      const listTugasBaru = {id:uuidv4(), completed: true, title:newList.item}
+      const listTugasBaru = {id:uuidv4(), completed: false, title:newList.item}
       console.log(listTugasBaru)
 
       this.setState({data: [...this.state.data, listTugasBaru]})
+    }
+    ubahCeklis = (id) => {
+        let newUbahCeklis = {id:uuidv4()}
+        console.log(newUbahCeklis)
     }
     render() {
         return (
             <> 
                 <Header/>
-                <ListTugas data={this.state.data} hapusList ={this.hapusList} tambahList={this.tambahList} />
+                <ListTugas data={this.state.data} hapusList ={this.hapusList} tambahList={this.tambahList} ubahCeklis = {this.ubahCeklis} />
             </>
         )
     }

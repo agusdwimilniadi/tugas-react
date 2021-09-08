@@ -6,13 +6,13 @@ import ListInput from "./ListInput";
 
 
 const ListTugas = (props) => {
-    const{data, hapusList, tambahList} = props //ambil variabel data dan hapus list dari props
+    const{data, hapusList, tambahList, ubahCeklis} = props //ambil variabel data dan hapus list dari props
 
     return (
         <div className={style.container}>
 
-            <ListInput tambahList={tambahList}/>
-            
+            <ListInput tambahList={tambahList} ubahCeklis={ubahCeklis}/>
+
             <br /><br />
 
             <table style={{margin:"auto"}}>
