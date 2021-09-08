@@ -39,18 +39,18 @@ class Home extends Component {
 
         this.setState({data : newListPengunjung})
     }
-
+    
     tambahPengunjung = (newUser) => {
         const newPengunjung ={ id:uuidv4(), ...newUser  }
 
-        this.setState({data: [...this.state.data, newPengunjung]})
+        this.setState({data: [...this.state.data, newPengunjung]}) /// ... artinya diambil semua
     }
 
     render() {
         return (
             <div>
                 <ListPassenger data={this.state.data} hapusPengunjung={this.hapusPengunjung} tambahPengunjung={this.tambahPengunjung}/>
-                <PassengerInput/>
+                <PassengerInput tambahPengunjung={this.tambahPengunjung}/>
             </div>
         )
     }

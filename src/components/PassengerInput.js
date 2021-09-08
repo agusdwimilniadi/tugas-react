@@ -9,8 +9,7 @@ class PassengerInput extends Component {
 
     onChange = (e) => {
         this.setState({
-            nama : e.target.nama,
-            umur : e.target.nama
+            [e.target.name] : e.target.value
         })
     }
     handleSubmit = (e) => {
@@ -22,6 +21,7 @@ class PassengerInput extends Component {
                 nama : this.state.nama,
                 umur : this.state.umur,
             }
+            
             this.props.tambahPengunjung(newData);
 
             this.setState({
@@ -66,7 +66,6 @@ class PassengerInput extends Component {
 
                     <p>Masukkan Umur Anda</p>
                     <input type="text" placeholder="Umur Anda" value={this.state.umur}  name="umur" onChange={this.onChange} />
-
 
                     <button onClick={this.handleSubmit}>Submit</button>
                     <button onClick={this.handleTutupInput}>Selesai</button>
