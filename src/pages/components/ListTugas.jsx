@@ -23,7 +23,7 @@ const ListTugas = (props) => {
 
                 </thead>
                 <tbody>
-                    {data.map((tugas) => <ListItem key={tugas.id} item = {tugas} hapusList ={hapusList}/>)}
+                    {data.map((x) => <ListItem key={x.id} item = {x} hapusList ={hapusList} ubahCeklis ={ubahCeklis}/>)}
                 </tbody>
 
             </table>

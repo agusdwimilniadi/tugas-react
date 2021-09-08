@@ -62,9 +62,18 @@ class Home extends Component {
 
       this.setState({data: [...this.state.data, listTugasBaru]})
     }
+    
     ubahCeklis = (id) => {
-        let newUbahCeklis = {id:uuidv4()}
-        console.log(newUbahCeklis)
+        let index = this.state.data.findIndex(
+          function (item) {
+            return item.id === id;
+          }
+        )
+        let dataCeklis = [...this.state.data];
+
+        dataCeklis[index].completed = !dataCeklis[index].completed
+
+        this.setState({data: [...dataCeklis]})
     }
     render() {
         return (
