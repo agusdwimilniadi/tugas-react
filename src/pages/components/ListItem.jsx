@@ -4,7 +4,7 @@ const ListItem = ({item, hapusList}) => {
         <tr className={style.boxCenter}>
             <td style={item.completed ? {textDecoration:"line-through"} : {}}>{item.title}</td>
             <td>
-                <input type="checkbox"  defaultChecked={item.completed}/>
+                <input type="checkbox" defaultChecked={item.completed}/>
             </td>
             <td>
                 <button className={style.buttonDelete} onClick={()=>{hapusList(item.id)}}>Hapus</button>
