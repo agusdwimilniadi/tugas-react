@@ -55,11 +55,18 @@ class Home extends Component {
       const newListTugas = this.state.data.filter((item)=> item.id !== id) //id nya bukan itu
       this.setState({data: newListTugas}) //RETURN
     }
+
+    tambahList = (newList) => {
+      const listTugasBaru = {id:uuidv4(), completed: true, title:newList.item}
+      console.log(listTugasBaru)
+
+      this.setState({data: [...this.state.data, listTugasBaru]})
+    }
     render() {
         return (
             <> 
                 <Header/>
-                <ListTugas data={this.state.data} hapusList ={this.hapusList}/>
+                <ListTugas data={this.state.data} hapusList ={this.hapusList} tambahList={this.tambahList} />
             </>
         )
     }

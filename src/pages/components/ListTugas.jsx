@@ -1,16 +1,18 @@
 
 import ListItem from "./ListItem";
 import style from "../components/style.module.css"
+import ListInput from "./ListInput";
 
 
 
 const ListTugas = (props) => {
-    const{data, hapusList} = props //ambil variabel data dan hapus list dari props
+    const{data, hapusList, tambahList} = props //ambil variabel data dan hapus list dari props
 
     return (
         <div className={style.container}>
-            <input type="text" className={style.inputFill} />
-            <button className={style.buttonInput} onClick={()=>{}}>Tambah</button>
+
+            <ListInput tambahList={tambahList}/>
+            
             <br /><br />
 
             <table style={{margin:"auto"}}>
