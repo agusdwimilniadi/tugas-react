@@ -71,7 +71,7 @@ function Home() {
             return item.id === id;
           }
         )
-        let dataCeklis = data
+        let dataCeklis = wdata
         dataCeklis[index].completed = !dataCeklis[index].completed
 
         setData((data) => {return [...dataCeklis]})
