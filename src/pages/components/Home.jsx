@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid'
 import Header from "./Header"
 import ListTugas from "./ListTugas"
 
+
 const initialValue = [ 
  
   {
@@ -78,7 +79,7 @@ function Home() {
     }
 
   return (
-      <> 
+      <>
           <Header/>
           <ListTugas data={data} hapusList ={hapusList} tambahList={tambahList} ubahCeklis = {ubahCeklis} />
       </>
