@@ -1,6 +1,5 @@
 const DetailPage = (props) => {
     console.log(props)
-    const {id, title, complete} = props;
 
     return (
     <>
@@ -8,11 +7,11 @@ const DetailPage = (props) => {
             <h1 className="text-center">Detail Tugas</h1>
             <br />
 
-            <h5>Detail tugas : {props.match.params.nama}</h5>
+            <h5>Detail tugas : {props.location.state.data.title}</h5>
 
         </div>
     </>
     )
-    
+
 }
 export default DetailPage;

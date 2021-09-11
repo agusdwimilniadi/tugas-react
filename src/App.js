@@ -5,6 +5,7 @@ import AboutApp from "./pages/components/AboutApp";
 import AboutAuthor from "./pages/components/AboutAuthor";
 import ErrorPage from "./pages/components/Error/ErrorPage";
 import DetailPage from "./pages/components/DetailPage";
+import FormDaftar from "./pages/components/FormDaftar";
 
 
 
@@ -15,9 +16,10 @@ function App() {
           <Navbar/><br /><br /><br /><br />
           <Switch>
             <Route path='/' exact component={Home}></Route>
-            <Route path='/about/about-app' component={AboutApp}></Route>
-            <Route path='/about/about-author' component={AboutAuthor}></Route>
-            <Route path='/profile/:nama' component={DetailPage}></Route>
+            <Route path='/about/about-app' exact component={AboutApp}></Route>
+            <Route path='/about/about-author' exact component={AboutAuthor}></Route>
+            <Route path='/form' exact component={FormDaftar}></Route>
+            <Route path='/profile/:nama' exact component={DetailPage}></Route>
             <Route component={ErrorPage}></Route>
           </Switch>
       </BrowserRouter>

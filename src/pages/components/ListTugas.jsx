@@ -7,9 +7,6 @@ import ListInput from "./ListInput";
 
 const ListTugas = (props) => {
     const{data, hapusList, tambahList, ubahCeklis} = props //ambil variabel data dan hapus list dari props
-    let propsData = () => {
-        let propsData = props;
-    }
     return (
         <div className={style.container}>
 
@@ -25,7 +22,7 @@ const ListTugas = (props) => {
 
                 </thead>
                 <tbody>
-                    {data.map((x) => <ListItem key={x.id} item = {x} hapusList ={hapusList} ubahCeklis ={ubahCeklis} propsData ={propsData}/>)}
+                    {data.map((x) => <ListItem key={x.id} item = {x} hapusList ={hapusList} ubahCeklis ={ubahCeklis} />)}
                 </tbody>
 
             </table>
