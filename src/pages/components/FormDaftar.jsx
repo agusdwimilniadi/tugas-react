@@ -9,8 +9,10 @@ const FormDaftar = () => {
     backEnd: "",
     frontEnd: "",
     fullStack: "",
-    harapan: "",
   };
+  const dataDesc = {
+    harapan : ""
+  }
   const baseError = {
     nama: "",
     email: "",
@@ -21,7 +23,7 @@ const FormDaftar = () => {
     harapan: "",
   }
   const [data, setData] = useState(dataForm);
-  const [deskripsi, setDeskripsi] = useState('')
+  const [deskripsi, setDeskripsi] = useState(dataDesc)
 
   const suratKesungguhan = useRef(null)
   const [pilihanKelas, setpilihanKelas]= useState('')
@@ -65,6 +67,8 @@ const FormDaftar = () => {
   }
   const resetData = () => {
       setData(dataForm);
+      setDeskripsi(dataDesc);
+
       setError('');
   }
   const handleSubmit = (event) => {
@@ -182,7 +186,7 @@ const FormDaftar = () => {
               onChange={e => setpilihanKelas(e.target.value)}
               required
             >
-              <option value="" selected>
+              <option value="" defaultChecked>
                 Pilih salah satu program
               </option>
               <option value="backEnd">
@@ -208,10 +212,9 @@ const FormDaftar = () => {
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows={3}
-                value={deskripsi}
+                value={deskripsi.harapan}
                 onChange={e=> setDeskripsi(e.target.value)}
                 name="harapan"
-                required
               />
             </div>
           </div>
