@@ -186,9 +186,9 @@ const FormDaftar = () => {
               onChange={e => setpilihanKelas(e.target.value)}
               required
             >
-              <option value="" defaultChecked>
-                Pilih salah satu program
-              </option>
+                <option value="" defaultChecked>
+                  Pilih salah satu program
+                </option>
               <option value="backEnd">
                 Coding Backend with Golang
               </option>
