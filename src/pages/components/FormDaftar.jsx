@@ -12,8 +12,9 @@ const FormDaftar = () => {
     harapan: "",
   };
   const baseError = {
-    nama: "Nama hanya berupa huruf",
-    noHandphone: "No HPPP",
+    nama: "",
+    email: "",
+    noHandphone: "",
     backEnd: "",
     frontEnd: "",
     fullStack: "",
@@ -23,13 +24,12 @@ const FormDaftar = () => {
   const [deskripsi, setDeskripsi] = useState('')
 
   const suratKesungguhan = useRef(null)
-  const [latarPendidikan, setLatarPendidikan]= useState('')
   const [pilihanKelas, setpilihanKelas]= useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(baseError)
 
-  const regex = /^[a-zA-Z]+$/;
+  const regex = /^[a-z A-Z]+$/;
   const regexNum = /^.{9,14}$/
-
+  const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
 
   const handleInput = e => {
@@ -38,33 +38,42 @@ const FormDaftar = () => {
 
       if (name == "nama") {
           if (regex.test(value)) {
-              setError("")
+              setError({...error, nama: ""})
           } else {
-              setError(baseError.nama)
+              setError({...error, nama: "Nama harus huruf saja"})
           }
-      } else if (name == "noHanphone") {
-          if(regexNum.test(value)) {
-              setError("")
-          }else {
-              setError(baseError.noHandphone)
-          }
+      }
+      if (name == "email") {
+        if(regexEmail.test(value)) {
+            setError({...error, email: ""})
+        }else {
+            setError({...error, email: "Masukkan email yang sesuai"})
+        }
+      }
+      if (name == "noHandphone") {
+        if(regexNum.test(value)) {
+            setError({...error, noHandphone: ""})
+        } else {
+            setError({...error, noHandphone: "Harus 9-14 karakter"})
+        }
       }
 
       setData({
           ...data,
           [name] : value
       })
-
   }
   const resetData = () => {
       setData(dataForm);
       setError('');
   }
   const handleSubmit = (event) => {
-      if (error !== "") {
-          alert("Data yang anda masukkan tidak sesuai")
+      if (error.nama == "" && error.email == "" && error.noHandphone == "") {
+        alert(`Data dari " ${data.nama} berhasil diinput`)
+        return true;
       } else {
-          alert(`Data dari " ${data.nama} berhasil diinput`)
+          alert("Data yang anda masukkan tidak sesuai")
+
       }
       event.preventDefault();
 
@@ -87,7 +96,7 @@ const FormDaftar = () => {
               value={data.nama}
               required
             />
-            <p className="text-danger">{error}</p>
+            <p className="text-danger">{error.nama ? error.nama : ""}</p>
           </div>
           <div className="form-group">
             <label htmlFor="formGroupExampleInput2">Email</label>
@@ -102,6 +111,8 @@ const FormDaftar = () => {
               required
             />
           </div>
+          <p className="text-danger">{error.email ? error.email : ""}</p>
+
           <div className="form-group">
             <label htmlFor="formGroupExampleInput2">No Handphone</label>
             <input
@@ -115,6 +126,8 @@ const FormDaftar = () => {
               required
             />
           </div>
+          <p className="text-danger">{error.noHandphone ? error.noHandphone : ""}</p>
+
           <div>
             <label htmlFor="formGroupExampleInput2" >
               Latar Belakang Pendidikan

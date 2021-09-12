@@ -10,6 +10,6 @@ const AboutApp = () => {
         </div>
     </>
     )
-    
 }
+
 export default AboutApp;

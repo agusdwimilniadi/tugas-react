@@ -6,15 +6,14 @@ const ListItem = (props) => {
 
     const history = useHistory();
     const detailProfil = () => {
-        console.log("props", props)
+        // console.log("props", props)
 
         history.push({
 
-            pathname: `/profile/${props.item.title}`,
+            pathname: `/profile/${props.item.id}`,
             state : {
                 data : props.item
             }
-
         })
     }
 

@@ -19,7 +19,7 @@ function App() {
             <Route path='/about/about-app' exact component={AboutApp}></Route>
             <Route path='/about/about-author' exact component={AboutAuthor}></Route>
             <Route path='/form' exact component={FormDaftar}></Route>
-            <Route path='/profile/:nama' exact component={DetailPage}></Route>
+            <Route path='/profile/:id' exact component={DetailPage}></Route>
             <Route component={ErrorPage}></Route>
           </Switch>
       </BrowserRouter>
