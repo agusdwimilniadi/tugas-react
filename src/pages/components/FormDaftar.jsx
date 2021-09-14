@@ -6,6 +6,7 @@ const FormDaftar = () => {
     nama: "",
     email: "",
     noHandphone: "",
+    customRadio : "",
     backEnd: "",
     frontEnd: "",
     fullStack: "",
@@ -68,10 +69,11 @@ const FormDaftar = () => {
   const resetData = () => {
       setData(dataForm);
       setDeskripsi(dataDesc);
-
       setError('');
   }
   const handleSubmit = (event) => {
+      console.log(suratKesungguhan.current.files)
+
       if (error.nama == "" && error.email == "" && error.noHandphone == "") {
         alert(`Data dari " ${data.nama} berhasil diinput`)
         return true;
@@ -142,14 +144,13 @@ const FormDaftar = () => {
                 id="customRadio1"
                 name="customRadio"
                 className="custom-control-input"
-                onChange={handleInput}
-                value={data.backIT}
-                required
+                // onChange={handleInput}
+                // value= "IT"
+                checked= {dataForm.customRadio === 'IT'}
               />
               <label
                 className="custom-control-label"
                 htmlFor="customRadio1"
-                name="backIT"
               >
                 IT
               </label>
@@ -159,14 +160,15 @@ const FormDaftar = () => {
                 type="radio"
                 id="customRadio2"
                 name="customRadio"
+                // onChange={handleInput}
                 className="custom-control-input"
+                value="nonIT"
+                // checked= {dataForm.customRadio === 'nonIT'}
+
               />
               <label
                 className="custom-control-label"
                 htmlFor="customRadio2"
-                name="backNoIT"
-                value={data.backNonIT}
-
               >
                 Non IT
               </label>
@@ -199,7 +201,7 @@ const FormDaftar = () => {
               <label className="form-label" htmlFor="customFile">
                 Foto Surat Kesungguhan
               </label>
-              <input type="file" className="form-control" id="customFile" refs={suratKesungguhan}  required/>
+              <input type="file" className="form-control" id="customFile" ref={suratKesungguhan} required/>
             </div>
             <div className="mb-3">
               <label

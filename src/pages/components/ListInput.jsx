@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react/cjs/react.development";
+import { tambahList } from "../../store/dataSlice";
 import style from "../components/style.module.css"
 
 
@@ -11,6 +13,7 @@ function ListInput(props){
             [e.target.name] : e.target.value
         })
     }
+    const dispatch = useDispatch();
 
 
     const handleSubmit = (e) => {
@@ -21,8 +24,8 @@ function ListInput(props){
             const newData = {
                 item : data.item,
             }
-            
-            props.tambahList(newData);
+
+            dispatch(tambahList(newData));
 
             setData({
                 item: "",
@@ -37,7 +40,7 @@ function ListInput(props){
             <input type="text" name="item" className={style.inputFill} onChange={onChange} value={data.item} />
             <button className={style.buttonInput} value={data.item} onClick={handleSubmit} >Tambah</button>
         </div>
-    )     
+    )
 }
 
 

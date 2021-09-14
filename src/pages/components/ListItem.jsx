@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { ubahCeklis, hapusList } from "../../store/dataSlice";
 import style from "../components/style.module.css"
 
 const ListItem = (props) => {
@@ -16,6 +18,7 @@ const ListItem = (props) => {
             }
         })
     }
+    const dispatch = useDispatch()
 
 
     return (
@@ -26,11 +29,11 @@ const ListItem = (props) => {
             <td style={props.item.completed ? {textDecoration:"line-through"} : {}}>{props.item.title}</td>
             <td>
                 <input type="checkbox" defaultChecked={props.item.completed} onChange={() => {
-                    props.ubahCeklis(props.item.id)
+                    dispatch(ubahCeklis(props.item.id))
                 }}/>
             </td>
             <td>
-                <button className='btn btn-danger' onClick={()=>{props.hapusList(props.item.id)}}>Hapus</button>
+                <button className='btn btn-danger' onClick={()=>{dispatch(hapusList(props.item.id))}}>Hapus</button>
                 <br />
                 <button className='btn btn-secondary my-2' onClick={detailProfil}>Detail</button>
             </td>
