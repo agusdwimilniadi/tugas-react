@@ -39,21 +39,21 @@ const FormDaftar = () => {
       const name = e.target.name;
       const value = e.target.value;
 
-      if (name == "nama") {
+      if (name === "nama") {
           if (regex.test(value)) {
               setError({...error, nama: ""})
           } else {
               setError({...error, nama: "Nama harus huruf saja"})
           }
       }
-      if (name == "email") {
+      if (name === "email") {
         if(regexEmail.test(value)) {
             setError({...error, email: ""})
         }else {
             setError({...error, email: "Masukkan email yang sesuai"})
         }
       }
-      if (name == "noHandphone") {
+      if (name === "noHandphone") {
         if(regexNum.test(value)) {
             setError({...error, noHandphone: ""})
         } else {
@@ -74,7 +74,7 @@ const FormDaftar = () => {
   const handleSubmit = (event) => {
       console.log(suratKesungguhan.current.files)
 
-      if (error.nama == "" && error.email == "" && error.noHandphone == "") {
+      if (error.nama === "" && error.email === "" && error.noHandphone === "") {
         alert(`Data dari " ${data.nama} berhasil diinput`)
         return true;
       } else {

@@ -3,9 +3,7 @@
 import ListItem from "./ListItem";
 import style from "../components/style.module.css"
 import ListInput from "./ListInput";
-import { useSelector, useDispatch } from "react-redux";
-import { hapusList, ubahCeklis } from "../../store/dataSlice";
-
+import { useSelector } from "react-redux";
 
 
 const ListTugas = (props) => {
