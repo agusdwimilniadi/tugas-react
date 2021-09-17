@@ -1,5 +1,4 @@
-import NameForm from "./pages/FormCoding";
-import Search from "./pages/Search";
+import CobaTes from "./pages/CobaTest";
 
 
 
@@ -8,9 +7,7 @@ import Search from "./pages/Search";
 function App() {
   return (
     <>
-      <NameForm/>
-      <Search/>
-
+      <CobaTes/>
     </>
   );
 }

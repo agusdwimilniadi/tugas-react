@@ -14,7 +14,6 @@ export default function Search() {
     try {
       result = await axios.get(`${URL}?query=${value}`);
       setStories(result.data.hits);
-      // console.log(value, "value", result.data.hits[0])
     } catch (error) {
       setError(error);
     }

@@ -10,10 +10,11 @@ describe('Render', () => {
   });
 
   it('Uppercase value', () => {
-    const { result } = renderHook(
+    const { result, rerender } = renderHook(
       () => useInputValue('Agus DM'));
 
     act(() => result.current.onChange({target: {value: 'Succes update'}}));
+    rerender("a")
     expect(result.current.value).toEqual('Succes update');
   });
 
