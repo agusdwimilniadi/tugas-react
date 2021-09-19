@@ -6,14 +6,12 @@ const News = () => {
   const [topData, setTopData] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=4cc4bc7145ac465c851767c282faef08"
-    )
+    fetch("https://api-berita-indonesia.vercel.app/cnbc/profil/")
       .then((res) => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setTopData(result.articles);
+          setTopData(result.data.posts);
         },
         (error) => {
           setIsLoaded(true);
@@ -44,13 +42,13 @@ const News = () => {
                 <div className="card m-auto mt-3" style={{ width: "18rem" }}>
                   <img
                     className="card-img-top"
-                    src={x.urlToImage}
+                    src={x.thumbnail}
                     alt={x.title}
                   />
                   <div className="card-body">
                     <h5 className="card-title">{x.title}</h5>
                     <p className="card-text">{x.description}</p>
-                    <a href={x.url} className="btn btn-primary">
+                    <a href={x.link} className="btn btn-primary">
                       Baca berita..
                     </a>
                   </div>
