@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "./asset/logo.png";
 
 const ContactUs = () => {
@@ -6,6 +7,8 @@ const ContactUs = () => {
     nama: "",
     email: "",
     nomorHp: "",
+    nationality: "",
+    pesan: "",
   };
   const baseError = {
     nama: "",
@@ -114,9 +117,9 @@ const ContactUs = () => {
                     value={data.nama}
                     required
                   />
-                  <p className="text-danger mb-1">
+                  <label className="text-danger mb-1">
                     {error.nama ? error.nama : ""}
-                  </p>
+                  </label>
                 </div>
                 <div className="form-group">
                   <label htmlFor="emailaddres">
@@ -142,9 +145,9 @@ const ContactUs = () => {
                     value={data.email}
                     required
                   />
-                  <p className="text-danger mb-1">
+                  <label className="text-danger mb-1">
                     {error.email ? error.email : ""}
-                  </p>
+                  </label>
                 </div>
                 <div className="form-group">
                   <label htmlFor="phoneNum">
@@ -170,9 +173,9 @@ const ContactUs = () => {
                     value={data.nomorHp}
                     required
                   />
-                  <p className="text-danger mb-1">
+                  <label className="text-danger mb-1">
                     {error.nomorHp ? error.nomorHp : ""}
-                  </p>
+                  </label>
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Nationality</label>
@@ -180,6 +183,7 @@ const ContactUs = () => {
                     className="form-select"
                     id="nationality"
                     aria-label="Default select example"
+                    name="nationality"
                   >
                     <option value="" selected>
                       Selected
@@ -190,9 +194,12 @@ const ContactUs = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Message</label>
+                  <label htmlFor="exampleInputPassword1" name="pesan">
+                    Message
+                  </label>
                   <textarea
                     className="form-control"
+                    name="pesan"
                     placeholder="Leave a comment here"
                     id="message"
                     style={{ height: "100px" }}
@@ -207,6 +214,12 @@ const ContactUs = () => {
                   style={{ backgroundColor: "#F47522", color: "#ffff" }}
                 >
                   Submit
+                  {/* <Link
+                    to="/result"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    Submit
+                  </Link> */}
                 </button>
               </form>
             </div>
