@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Home.css";
 
-function PassengerInput(props) {
+function PassengerInput(props, onChangeInsertNama) {
   const [state, setState] = useState({
     nama: "",
     umur: "",
@@ -16,29 +16,7 @@ function PassengerInput(props) {
     });
   };
 
-  const handleSubmit = (e) => {
-    if (state.nama.trim() && state.umur && state.jenisKelamin) {
-      const umur = state.umur;
-      if (umur >= 75 || umur <= 12) {
-        alert("Umur tidak sesuai");
-      } else {
-        const newData = {
-          nama: state.nama,
-          umur: state.umur,
-          jenisKelamin: state.jenisKelamin,
-        };
-        props.tambahPengunjung(newData);
-        setState({
-          ...state,
-          nama: "",
-          umur: "",
-          jenisKelamin: "Pria",
-        });
-      }
-    } else {
-      alert("Data masih ada yang kosong");
-    }
-  };
+  const handleSubmit = (e) => {};
 
   const handleBukaInput = () => {
     setState({
@@ -84,12 +62,10 @@ function PassengerInput(props) {
           name="umur"
           onChange={onChange}
         />
-        <p>Masukkan Jenis Kelamin Anda</p>
-        <select onChange={onChange} name="jenisKelamin">
-          <option value="Pria" selected>
-            Pria
-          </option>
-          <option value="Wanita">Wanita</option>
+        <select id="lang" onChange={onChangeInsertNama} value="ha">
+          <option value="select">Select</option>
+          <option value="laki-laki">Laki-Laki</option>
+          <option value="perempuan">Perempuan</option>
         </select>
         <p></p>
         <button onClick={handleSubmit}>Submit</button>

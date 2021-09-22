@@ -1,8 +1,9 @@
 import ListItem from "./ListItem";
 
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import LoadingSvg from "./LoadingSvg";
+import PassengerInput from "./PassengerInput";
 
 const GetTodoList = gql`
   query MyQuery($id_user: Int!, $jenis_kelamin: String = "") {
@@ -16,14 +17,68 @@ const GetTodoList = gql`
     }
   }
 `;
+const getAll = gql`
+  query MyQuery {
+    anggota {
+      id
+      jenis_kelamin
+      nama
+      umur
+    }
+  }
+`;
+const updateUmurById = gql`
+  mutation MyMutation($id: Int!, $umur_user: Int!) {
+    update_anggota_by_pk(pk_columns: { id: $id }, _set: { umur: $umur_user }) {
+      id
+      umur
+    }
+  }
+`;
+
+const deleteById = gql`
+  mutation MyMutation($id: Int = 10) {
+    delete_anggota_by_pk(id: $id) {
+      id
+    }
+  }
+`;
+
+const insertById = gql`
+  mutation MyMutation(
+    $nama: String = ""
+    $jenis_kelamin: String = ""
+    $umur_user: Int = 10
+  ) {
+    insert_anggota_one(
+      object: { jenis_kelamin: $jenis_kelamin, nama: $nama, umur: $umur_user }
+    ) {
+      id
+      nama
+      jenis_kelamin
+    }
+  }
+`;
 
 const ListPassenger = () => {
-  const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoList);
+  const { data, loading, error } = useQuery(getAll);
+  // const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoList);
+  const [updateUmur, { loading: loadingUpdate }] = useMutation(updateUmurById);
+  const [deleteUser, { loading: loadingDelete }] = useMutation(deleteById, {
+    refetchQueries: [getAll],
+  });
+  const [insertUser, { loading: loadingInsert }] = useMutation(insertById, {
+    refetchQueries: [getAll],
+  });
   const [userId, setUserId] = useState([]);
+  const [umur, setUmur] = useState([]);
   const [jenisKelamin, setJenisKelamin] = useState([]);
   const [list, setList] = useState([]);
 
-  if (loading) {
+  // INSERT
+  const [insertNama, setInsertNama] = useState([]);
+
+  if (loading || loadingUpdate || loadingDelete || loadingInsert) {
     return <LoadingSvg />;
   }
   if (error) {
@@ -32,12 +87,6 @@ const ListPassenger = () => {
   }
 
   const getData = () => {
-    getTodo({
-      variables: {
-        id_user: userId,
-        jenis_kelamin: jenisKelamin,
-      },
-    });
     setList(data?.todolist);
   };
   const onChangeUserId = (e) => {
@@ -50,14 +99,40 @@ const ListPassenger = () => {
       setJenisKelamin(e.target.value);
     }
   };
-  const hapusPengunjung = (id) => {
-    // this.setState({
-    //   data: [
-    //     ...this.state.data.filter((item) => {
-    //       return item.id !== id;
-    //     }),
-    //   ],
-    // });
+  const onChangeUmur = (e) => {
+    if (e.target) {
+      setUmur(e.target.value);
+    }
+  };
+  const onClickItem = (idx) => {
+    updateUmur({
+      variables: {
+        id: idx,
+        umur_user: umur,
+      },
+    });
+  };
+  const hapusPengunjung = (idx) => {
+    deleteUser({
+      variables: {
+        id: idx,
+      },
+    });
+  };
+  // INSERT
+  const onChangeInsertNama = (e) => {
+    if (e.target) {
+      setInsertNama(e.target.value);
+    }
+  };
+  const handleSubmit = () => {
+    insertUser({
+      variables: {
+        nama: insertNama,
+        jenis_kelamin: jenisKelamin,
+        umur_user: umur,
+      },
+    });
   };
 
   return (
@@ -69,39 +144,73 @@ const ListPassenger = () => {
         placeholder="User ID"
       />
       <br />
-      {/* <input
-        type="text"
-        value={jenisKelamin}
-        onChange={onChangeJenisKelamin}
-        placeholder="laki-laki/perempuan"
-      /> */}
       <select id="lang" onChange={onChangeJenisKelamin} value={jenisKelamin}>
         <option value="select">Select</option>
         <option value="laki-laki">Laki-Laki</option>
         <option value="perempuan">Perempuan</option>
       </select>
       <br />
-
       <button onClick={getData}>Get Data</button>
+      <h3>Update Umur</h3>
+      <input
+        type="text"
+        value={umur}
+        onChange={onChangeUmur}
+        placeholder="Masukkan umur disini"
+      />
+      <br />
+      <br />
       <table cellPadding="5px" cellSpacing="0" style={{ margin: "auto" }}>
         <thead bgcolor="red">
+          <td>Nomor</td>
           <td>ID</td>
           <td>Nama</td>
           <td>Umur</td>
           <td>Jenis Kelamin</td>
           <td bgcolor="white" className="removeBorder"></td>
         </thead>
-        {data?.anggota.map((value, item) => (
+        {data?.anggota.map((value, i) => (
           <ListItem
-            key={item}
+            key={value.id}
+            no={i + 1}
             id={value.id}
             nama={value.nama}
             jenisKelamin={value.jenis_kelamin}
             umur={value.umur}
-            hapusPengunjung={() => hapusPengunjung()}
+            hapusPengunjung={() => hapusPengunjung(value.id)}
+            updateUmurClick={() => onClickItem(value.id)}
           />
         ))}
       </table>
+      <br />
+      <br />
+      <div onSubmit={handleSubmit}>
+        <p>Masukkan Nama Anda</p>
+        <input
+          type="text"
+          className="input-text"
+          placeholder="Nama anda ..."
+          value={insertNama}
+          name="nama"
+          onChange={onChangeInsertNama}
+        />
+        <p>Masukkan Umur Anda</p>
+        <input
+          type="number"
+          className="input-text"
+          placeholder="Umur anda ..."
+          value={umur}
+          name="umur"
+          onChange={onChangeUmur}
+        />
+        <select id="lang" onChange={onChangeJenisKelamin} value="ha">
+          <option value="select">Select</option>
+          <option value="laki-laki">Laki-Laki</option>
+          <option value="perempuan">Perempuan</option>
+        </select>
+        <p></p>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
   );
 };

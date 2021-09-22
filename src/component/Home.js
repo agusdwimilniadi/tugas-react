@@ -53,16 +53,6 @@ class Home extends Component {
   //   };
   // }
 
-  tambahPengunjung = (newUser) => {
-    // const newData = {
-    //   id: uuidv4(),
-    //   ...newUser,
-    // };
-    // this.setState({
-    //   data: [...this.statb e.data, newData],
-    // });
-  };
-
   render() {
     return (
       <div>
@@ -71,7 +61,6 @@ class Home extends Component {
         // data={this.state.data}
         // hapusPengunjung={this.hapusPengunjung}
         />
-        <PassengerInput tambahPengunjung={this.tambahPengunjung} />
       </div>
     );
   }
