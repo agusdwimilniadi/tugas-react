@@ -1,6 +1,12 @@
 import ListItem from "./ListItem";
 
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import {
+  gql,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+  useSubscription,
+} from "@apollo/client";
 import { useState } from "react";
 import LoadingSvg from "./LoadingSvg";
 import PassengerInput from "./PassengerInput";
@@ -60,16 +66,25 @@ const insertById = gql`
   }
 `;
 
+const subscriptionAnggota = gql`
+  subscription MySubscription {
+    anggota {
+      id
+      jenis_kelamin
+      nama
+      umur
+    }
+  }
+`;
+
 const ListPassenger = () => {
-  const { data, loading, error } = useQuery(getAll);
+  // const { data, loading, error } = useQuery(getAll);
   // const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoList);
+  const { data, loading, error } = useSubscription(subscriptionAnggota);
+
   const [updateUmur, { loading: loadingUpdate }] = useMutation(updateUmurById);
-  const [deleteUser, { loading: loadingDelete }] = useMutation(deleteById, {
-    refetchQueries: [getAll],
-  });
-  const [insertUser, { loading: loadingInsert }] = useMutation(insertById, {
-    refetchQueries: [getAll],
-  });
+  const [deleteUser, { loading: loadingDelete }] = useMutation(deleteById);
+  const [insertUser, { loading: loadingInsert }] = useMutation(insertById);
   const [userId, setUserId] = useState([]);
   const [umur, setUmur] = useState([]);
   const [jenisKelamin, setJenisKelamin] = useState([]);
