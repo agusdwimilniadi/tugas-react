@@ -33,6 +33,26 @@ const getAll = gql`
     }
   }
 `;
+const getDataByJenisKelamin = gql`
+  query MyQuery($_eq: String = "") {
+    anggota(where: { jenis_kelamin: { _eq: $_eq } }) {
+      id
+      jenis_kelamin
+      nama
+      umur
+    }
+  }
+`;
+const getAllDataByIdQuery = gql`
+  query MyQuery($_eq: String = "") {
+    anggota(where: { id: { _eq: $_eq } }) {
+      id
+      jenis_kelamin
+      nama
+      umur
+    }
+  }
+`;
 const updateUmurById = gql`
   mutation MyMutation($id: Int!, $umur_user: Int!) {
     update_anggota_by_pk(pk_columns: { id: $id }, _set: { umur: $umur_user }) {
@@ -79,8 +99,9 @@ const subscriptionAnggota = gql`
 
 const ListPassenger = () => {
   // const { data, loading, error } = useQuery(getAll);
-  // const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoList);
   const { data, loading, error } = useSubscription(subscriptionAnggota);
+  const [getData, { data: dataById, loading: loadingById }] =
+    useLazyQuery(getAllDataByIdQuery);
 
   const [updateUmur, { loading: loadingUpdate }] = useMutation(updateUmurById);
   const [deleteUser, { loading: loadingDelete }] = useMutation(deleteById);
@@ -100,9 +121,20 @@ const ListPassenger = () => {
     console.log(error);
     return null;
   }
+  const getAllDataById = (id_user) => {
+    getData({
+      variables: {
+        _eq: id_user,
+      },
+    });
+  };
 
-  const getData = () => {
-    setList(data?.todolist);
+  const getDataJenisKelamin = (jenis_kelamin) => {
+    dataById({
+      variables: {
+        _eq: jenis_kelamin,
+      },
+    });
   };
   const onChangeUserId = (e) => {
     if (e.target) {
@@ -161,7 +193,7 @@ const ListPassenger = () => {
       <br />
 
       <br />
-      <button onClick={getData}>Get Data By ID</button>
+      <button onClick={getDataByJenisKelamin}>Get Data By ID</button>
       <select id="lang" onChange={onChangeJenisKelamin} value={jenisKelamin}>
         <option value="select">Select</option>
         <option value="laki-laki">Laki-Laki</option>
