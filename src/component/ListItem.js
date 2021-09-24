@@ -1,4 +1,10 @@
 import "./Home.css";
+import {
+  gql,
+  useLazyQuery,
+  useMutation,
+  useSubscription,
+} from "@apollo/client";
 
 const ListItem = ({ id, nama, jenisKelamin, umur, hapusPengunjung }) => {
   // const { id, nama, umur, jenisKelamin } = props.data;

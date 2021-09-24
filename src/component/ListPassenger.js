@@ -1,6 +1,11 @@
 import ListItem from "./ListItem";
 
-import { gql, useLazyQuery } from "@apollo/client";
+import {
+  gql,
+  useLazyQuery,
+  useMutation,
+  useSubscription,
+} from "@apollo/client";
 import { useState } from "react";
 import LoadingSvg from "./LoadingSvg";
 
@@ -16,9 +21,28 @@ const GetTodoList = gql`
     }
   }
 `;
+const insertById = gql`
+  mutation MyMutation(
+    $nama: String = ""
+    $jenis_kelamin: String = ""
+    $umur_user: Int = 10
+  ) {
+    insert_anggota_one(
+      object: { jenis_kelamin: $jenis_kelamin, nama: $nama, umur: $umur_user }
+    ) {
+      id
+      nama
+      jenis_kelamin
+    }
+  }
+`;
 
 const ListPassenger = () => {
   const [getTodo, { data, loading, error }] = useLazyQuery(GetTodoList);
+
+  //INSERT
+  const [insertUser, { loading: loadingInsert }] = useMutation(insertById);
+
   const [userId, setUserId] = useState([]);
   const [jenisKelamin, setJenisKelamin] = useState([]);
   const [list, setList] = useState([]);
@@ -99,6 +123,7 @@ const ListPassenger = () => {
             jenisKelamin={value.jenis_kelamin}
             umur={value.umur}
             hapusPengunjung={() => hapusPengunjung()}
+            insertUser={insertUser}
           />
         ))}
       </table>
