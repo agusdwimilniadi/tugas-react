@@ -159,13 +159,14 @@ const ListPassenger = () => {
         placeholder="User ID"
       />
       <br />
+
+      <br />
+      <button onClick={getData}>Get Data By ID</button>
       <select id="lang" onChange={onChangeJenisKelamin} value={jenisKelamin}>
         <option value="select">Select</option>
         <option value="laki-laki">Laki-Laki</option>
         <option value="perempuan">Perempuan</option>
       </select>
-      <br />
-      <button onClick={getData}>Get Data</button>
       <h3>Update Umur</h3>
       <input
         type="text"

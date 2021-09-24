@@ -20,7 +20,7 @@ const ListItem = ({
       <td>{jenisKelamin}</td>
       <td className="removeBorder">
         <button onClick={hapusPengunjung}>Hapus</button>
-        <button onClick={updateUmurClick}>Update Umur {nama}</button>
+        <button onClick={updateUmurClick}>Update Umur</button>
       </td>
     </tr>
   );
