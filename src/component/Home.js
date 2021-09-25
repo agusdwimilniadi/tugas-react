@@ -1,6 +1,4 @@
 import { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
-import PassengerInput from "./PassengerInput";
 import ListPassenger from "./ListPassenger.js";
 import Header from "./Header";
 
@@ -57,10 +55,7 @@ class Home extends Component {
     return (
       <div>
         <Header />
-        <ListPassenger
-        // data={this.state.data}
-        // hapusPengunjung={this.hapusPengunjung}
-        />
+        <ListPassenger />
       </div>
     );
   }

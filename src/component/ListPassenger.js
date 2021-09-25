@@ -1,63 +1,24 @@
 import ListItem from "./ListItem";
 
-import {
-  gql,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-  useSubscription,
-} from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import { useState } from "react";
 import LoadingSvg from "./LoadingSvg";
-import PassengerInput from "./PassengerInput";
 
-const GetTodoList = gql`
-  query MyQuery($id_user: Int!, $jenis_kelamin: String = "") {
-    anggota(
-      where: { id: { _eq: $id_user }, jenis_kelamin: { _eq: $jenis_kelamin } }
-    ) {
-      id
-      jenis_kelamin
-      nama
-      umur
-    }
-  }
-`;
-const getAll = gql`
-  query MyQuery {
-    anggota {
-      id
-      jenis_kelamin
-      nama
-      umur
-    }
-  }
-`;
-const getDataByJenisKelamin = gql`
-  query MyQuery($_eq: String = "") {
-    anggota(where: { jenis_kelamin: { _eq: $_eq } }) {
-      id
-      jenis_kelamin
-      nama
-      umur
-    }
-  }
-`;
-const getAllDataByIdQuery = gql`
-  query MyQuery($_eq: String = "") {
-    anggota(where: { id: { _eq: $_eq } }) {
-      id
-      jenis_kelamin
-      nama
-      umur
-    }
-  }
-`;
 const updateUmurById = gql`
-  mutation MyMutation($id: Int!, $umur_user: Int!) {
-    update_anggota_by_pk(pk_columns: { id: $id }, _set: { umur: $umur_user }) {
-      id
-      umur
+  mutation MyMutation(
+    $_eq: Int = 10
+    $id: Int = 10
+    $jenis_kelamin: String = ""
+    $nama: String = ""
+    $umur: Int = 10
+  ) {
+    update_anggota(
+      where: { id: { _eq: $_eq } }
+      _set: { jenis_kelamin: $jenis_kelamin, nama: $nama, umur: $umur }
+    ) {
+      returning {
+        id
+      }
     }
   }
 `;
@@ -87,8 +48,8 @@ const insertById = gql`
 `;
 
 const subscriptionAnggota = gql`
-  subscription MySubscription {
-    anggota {
+  subscription MySubscription($where: anggota_bool_exp = {}) {
+    anggota(where: $where, order_by: { id: asc }) {
       id
       jenis_kelamin
       nama
@@ -98,21 +59,22 @@ const subscriptionAnggota = gql`
 `;
 
 const ListPassenger = () => {
-  // const { data, loading, error } = useQuery(getAll);
-  const { data, loading, error } = useSubscription(subscriptionAnggota);
-  const [getData, { data: dataById, loading: loadingById }] =
-    useLazyQuery(getAllDataByIdQuery);
+  const [subsQuery, setSubsQuery] = useState({ variables: { where: {} } });
+  const { data, loading, error } = useSubscription(
+    subscriptionAnggota,
+    subsQuery
+  );
 
   const [updateUmur, { loading: loadingUpdate }] = useMutation(updateUmurById);
   const [deleteUser, { loading: loadingDelete }] = useMutation(deleteById);
   const [insertUser, { loading: loadingInsert }] = useMutation(insertById);
+
   const [userId, setUserId] = useState([]);
-  const [umur, setUmur] = useState([]);
   const [jenisKelamin, setJenisKelamin] = useState([]);
-  const [list, setList] = useState([]);
+  const [umur, setUmur] = useState([]);
+  const [insertNama, setInsertNama] = useState([]);
 
   // INSERT
-  const [insertNama, setInsertNama] = useState([]);
 
   if (loading || loadingUpdate || loadingDelete || loadingInsert) {
     return <LoadingSvg />;
@@ -121,21 +83,41 @@ const ListPassenger = () => {
     console.log(error);
     return null;
   }
-  const getAllDataById = (id_user) => {
-    getData({
+  const getAllDataById = () => {
+    setSubsQuery({
       variables: {
-        _eq: id_user,
+        where: {
+          id: {
+            _eq: userId,
+          },
+        },
       },
     });
+  };
+  const getAllByJenisKelamin = () => {
+    setSubsQuery({
+      variables: {
+        where: {
+          jenis_kelamin: {
+            _eq: jenisKelamin,
+          },
+        },
+      },
+    });
+    setJenisKelamin("select");
+  };
+  const resetAll = () => {
+    setSubsQuery({
+      variables: {
+        where: {},
+      },
+    });
+    setUserId("");
+    setInsertNama("");
+    setUmur("");
+    setJenisKelamin("");
   };
 
-  const getDataJenisKelamin = (jenis_kelamin) => {
-    dataById({
-      variables: {
-        _eq: jenis_kelamin,
-      },
-    });
-  };
   const onChangeUserId = (e) => {
     if (e.target) {
       setUserId(e.target.value);
@@ -154,8 +136,8 @@ const ListPassenger = () => {
   const onClickItem = (idx) => {
     updateUmur({
       variables: {
-        id: idx,
-        umur_user: umur,
+        _eq: idx,
+        jenisKelamin: jenisKelamin,
       },
     });
   };
@@ -180,6 +162,7 @@ const ListPassenger = () => {
         umur_user: umur,
       },
     });
+    resetAll();
   };
 
   return (
@@ -191,21 +174,19 @@ const ListPassenger = () => {
         placeholder="User ID"
       />
       <br />
-
+      <button onClick={getAllDataById}>Get Data By ID</button>
       <br />
-      <button onClick={getDataByJenisKelamin}>Get Data By ID</button>
       <select id="lang" onChange={onChangeJenisKelamin} value={jenisKelamin}>
         <option value="select">Select</option>
         <option value="laki-laki">Laki-Laki</option>
         <option value="perempuan">Perempuan</option>
       </select>
-      <h3>Update Umur</h3>
-      <input
-        type="text"
-        value={umur}
-        onChange={onChangeUmur}
-        placeholder="Masukkan umur disini"
-      />
+      <br />
+
+      <button onClick={getAllByJenisKelamin}>Get Data By Jenis Kelamin</button>
+      <br />
+      <button onClick={resetAll}>Reset</button>
+
       <br />
       <br />
       <table cellPadding="5px" cellSpacing="0" style={{ margin: "auto" }}>
@@ -227,10 +208,11 @@ const ListPassenger = () => {
             umur={value.umur}
             hapusPengunjung={() => hapusPengunjung(value.id)}
             updateUmurClick={() => onClickItem(value.id)}
+            updateUmurById={updateUmurById}
+            valueId={value.id}
           />
         ))}
       </table>
-      <br />
       <br />
       <div onSubmit={handleSubmit}>
         <p>Masukkan Nama Anda</p>

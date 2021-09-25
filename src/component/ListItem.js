@@ -1,26 +1,38 @@
+import FormEdit from "./FormEdit";
 import "./Home.css";
 
 const ListItem = ({
+  no,
   id,
   nama,
   jenisKelamin,
   umur,
   hapusPengunjung,
-  updateUmurClick,
-  no,
+  updateUmurById,
+  valueId,
 }) => {
   // const { id, nama, umur, jenisKelamin } = props.data;
 
   return (
     <tr>
       <td>{no}</td>
+
       <td>{id}</td>
       <td>{nama}</td>
       <td>{umur}</td>
       <td>{jenisKelamin}</td>
+      <td className="removeBorder" onClick={hapusPengunjung}>
+        <button>Hapus</button>
+      </td>
       <td className="removeBorder">
-        <button onClick={hapusPengunjung}>Hapus</button>
-        <button onClick={updateUmurClick}>Update Umur</button>
+        <FormEdit
+          id={id}
+          nama={nama}
+          umur={umur}
+          jenisKelamin={jenisKelamin}
+          updateUmurById={updateUmurById}
+          valueId={valueId}
+        />
       </td>
     </tr>
   );
